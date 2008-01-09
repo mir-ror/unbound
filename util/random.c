@@ -92,7 +92,7 @@ ub_arc4random_stir(struct ub_hiddenstate* s)
 }
 
 int 
-ub_initstate(unsigned int ATTR_UNUSED(seed), struct ub_randstate* state, 
+ub_initstate(unsigned int seed, struct ub_randstate* state, 
 	unsigned long ATTR_UNUSED(n))
 {
 	state->s = calloc(1, sizeof(*state->s));
@@ -103,9 +103,21 @@ ub_initstate(unsigned int ATTR_UNUSED(seed), struct ub_randstate* state,
 
 	/* RAND_ is threadsafe, by the way */
 	if(!RAND_status()) {
-		log_err("Random generator has no entropy (error %ld)",
-		    ERR_get_error());
-		return 0;
+		/* try to seed it */
+		unsigned char buf[256];
+		unsigned int v = seed;
+		size_t i;
+		for(i=0; i<256/sizeof(seed); i++) {
+			memmove(buf+i*sizeof(seed), &v, sizeof(seed));
+			v = v*seed + (unsigned int)i;
+		}
+		RAND_seed(buf, 256);
+		if(!RAND_status()) {
+			log_err("Random generator has no entropy (error %ld)",
+				ERR_get_error());
+			return 0;
+		}
+		log_warn("openssl has no entropy, seeding with time");
 	}
 	ub_arc4random_stir(state->s);
 	return 1;
