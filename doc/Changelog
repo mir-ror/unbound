@@ -1,3 +1,6 @@
+12 February 2008: Wouter
+	- fix for ldns-src tarball not present (from trunk).
+
 11 February 2008: Wouter
 	- nicer statistic output (from trunk).
 	- ub_val to ub_ for library API (from trunk).
