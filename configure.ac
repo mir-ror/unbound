@@ -231,6 +231,17 @@ int test() {
 }
 ], [CFLAGS="$CFLAGS -D_BSD_SOURCE"])
 
+CHECK_COMPILER_FLAG_NEEDED(-D_GNU_SOURCE,
+[
+#include <netinet/in.h>
+
+int test() {
+        struct in6_pktinfo inf;
+        int a = (int)sizeof(inf);
+        return a;
+}
+], [CFLAGS="$CFLAGS -D_GNU_SOURCE"])
+
 CHECK_COMPILER_FLAG_NEEDED(-D_POSIX_C_SOURCE=200112,
 [
 #include "confdefs.h"
@@ -650,7 +661,7 @@ AC_ARG_WITH(ldns,
 	AC_SUBST(ldnsdir)
 ])
 
-AC_CHECK_LIB(ldns, ldns_rr_new, [
+AC_CHECK_LIB(ldns, ldns_buffer_copy, [
 dnl ldns was found, check compat functions
 AC_CHECK_LIB(ldns, [ldns_rr_free])
 AC_REPLACE_FUNCS(inet_aton)
@@ -683,7 +694,7 @@ AC_MSG_NOTICE([Configure $ldnsdir])
 echo "(cd $ldnsdir && ./configure)"
 (cd $ldnsdir && ./configure)
 AC_MSG_NOTICE([Finished $ldnsdir configure])
-CPPFLAGS="$CPPFLAGS -I$ldnsdir/include"
+CPPFLAGS="-I$ldnsdir/include $CPPFLAGS"
 LDFLAGS="$LDFLAGS $ldnsdir/*.lo"
 AC_SUBST(ldnsdir)
 dnl use ldns compat functions
