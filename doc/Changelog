@@ -1,3 +1,10 @@
+7 October 2009: Wouter
+	- release 1.3.4 tag.
+	- Fixed bug where NSEC3 signature was not checked. This meant that
+	  a DS could be spoofed away by a carefully crafted packet.
+	  A downgrade attack on existing secure delegations.
+	- updated iana port list.
+
 4 August 2009: Wouter
 	- Added test that the examples from draft rsasha256-14 verify.
 	- iana portlist updated.
