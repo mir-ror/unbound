@@ -1,3 +1,7 @@
+13 December 2011: Wouter
+	- iana portlist updated.
+	- svn tag 1.4.14rc1
+
 5 December 2011: Wouter
 	- Fix getaddrinfowithincludes on windows with fedora16 mingw32-gcc.
 	- Fix warnings with gcc 4.6 in compat/inet_ntop.c.
