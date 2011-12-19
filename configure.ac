@@ -6,7 +6,7 @@ sinclude(acx_pthread.m4)
 sinclude(acx_python.m4)
 sinclude(ac_pkg_swig.m4)
 
-AC_INIT(unbound, 1.4.13, unbound-bugs@nlnetlabs.nl, unbound)
+AC_INIT(unbound, 1.4.13p1, unbound-bugs@nlnetlabs.nl, unbound)
 
 LIBUNBOUND_CURRENT=2
 LIBUNBOUND_REVISION=13
