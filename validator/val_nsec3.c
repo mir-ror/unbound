@@ -1204,6 +1204,10 @@ nsec3_do_prove_nodata(struct module_env* env, struct nsec3_filter* flt,
 	/* Due to forwarders, cnames, and other collating effects, we
 	 * can see the ordinary unsigned data from a zone beneath an
 	 * insecure delegation under an optout here */
+	if(!ce.nc_rrset) {
+		verbose(VERB_ALGO, "nsec3 nodata proof: no next closer nsec3");
+		return sec_status_bogus;
+	}
 
 	/* We need to make sure that the covering NSEC3 is opt-out. */
 	log_assert(ce.nc_rrset);
